@@ -23,6 +23,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+    implementation("org.springframework:spring-context:6.2.2")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
