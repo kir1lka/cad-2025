@@ -3,12 +3,19 @@
  */
 package ru.bsuedu.cad.lab;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+public class App
+{
+    public String getGreeting() {
+        return "Hello";
+    }
+    public static void main(String[] args)
+    {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        ProductProvider provider = context.getBean(ProductProvider.class);
+        Renderer renderer = context.getBean(Renderer.class);
+        renderer.render(provider.getProducts());
     }
 }
