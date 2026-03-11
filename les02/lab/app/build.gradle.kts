@@ -5,6 +5,8 @@
  * For more details on building Java & JVM projects, please refer to https://docs.gradle.org/8.12/userguide/building_java_projects.html in the Gradle documentation.
  */
 
+
+
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -37,6 +39,16 @@ java {
 application {
     // Define the main class for the application.
     mainClass = "ru.bsuedu.cad.lab.App"
+}
+
+// не робит приходиться все равно писать в консоль( 
+tasks.withType<JavaExec> {
+    jvmArgs("-Dfile.encoding=UTF-8")
+    standardOutput = System.out
+    errorOutput = System.err
+}
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }
 
 tasks.named<Test>("test") {
