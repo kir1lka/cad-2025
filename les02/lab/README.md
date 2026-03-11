@@ -10,6 +10,9 @@
 
 1. Установлена `JDK 17`
 2. Установлен `Gradle 8.12`
+
+![lab.png)](lab.png)
+
 3. Создан проект с помощью команды `gradle init --package ru.bsuedu.cad.lab`
 
 ![lab1.png)](lab1.png)
