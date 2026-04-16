@@ -14,8 +14,17 @@ public class HTMLTableRenderer implements Renderer {
     public void render(List<Product> products) {
         try (FileWriter writer = new FileWriter("product.html")) {
 
-            writer.write("<html><body>");
-            writer.write("<table border='1'>");
+            writer.write("<!DOCTYPE html>");
+            writer.write("<html><head><meta charset='UTF-8'><style>");
+            writer.write("body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding: 40px; background: #f5f5f5; }");
+            writer.write("table { border-collapse: collapse; width: 70%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }");
+            writer.write("th { background-color: #4a6fa5; color: white; padding: 12px 16px; text-align: left; }");
+            writer.write("td { padding: 10px 16px; border-bottom: 1px solid #e0e0e0; }");
+            writer.write("tr:last-child td { border-bottom: none; }");
+            writer.write("tr:nth-child(even) td { background-color: #f9f9f9; }");
+            writer.write("tr:hover td { background-color: #eef2f8; }");
+            writer.write("</style></head><body>");
+            writer.write("<table>");
             writer.write("<tr><th>ID</th><th>Название</th><th>Цена</th><th>Остаток</th></tr>");
 
             for (Product p : products) {
