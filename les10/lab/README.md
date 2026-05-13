@@ -326,7 +326,7 @@ public class AppConfig {
 gradle war
 ```
 
-Итоговый файл `zoostore.war` копируется в директорию `webapps/` сервера Apache Tomcat 11 и запускается через `startup.bat`.
+Итоговый файл `devicestore.war` копируется в директорию `webapps/` сервера Apache Tomcat 11 и запускается через `startup.bat`.
 
 Результат работы
 
