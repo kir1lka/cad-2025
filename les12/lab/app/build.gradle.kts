@@ -54,7 +54,7 @@ java {
 }
 
 tasks.war {
-    archiveFileName.set("zoostore.war")
+    archiveFileName.set("devicestore.war")
 }
 
 tasks.test {
