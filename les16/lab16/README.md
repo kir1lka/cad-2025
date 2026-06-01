@@ -417,7 +417,7 @@ tasks.jacocoTestCoverageVerification {
 
 Запуск тестирования и формирование отчётов:
 ```
-./gradlew test jacocoTestReport
+gradle test jacocoTestReport
 ```
 
 Отчёты:
