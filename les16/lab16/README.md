@@ -441,6 +441,50 @@ class AppConfig {
         +entityManagerFactory() LocalContainerEntityManagerFactoryBean
         +transactionManager() PlatformTransactionManager
     }
+    
+    class SecurityConfig {
+        +passwordEncoder() PasswordEncoder
+        +userDetailsService() UserDetailsService
+        +apiSecurityFilterChain(HttpSecurity) SecurityFilterChain
+        +formLoginSecurityFilterChain(HttpSecurity) SecurityFilterChain
+    }
+    
+    class WebConfig {
+        -ApplicationContext applicationContext
+        +templateResolver() SpringResourceTemplateResolver
+        +templateEngine() SpringTemplateEngine
+        +configureViewResolvers(ViewResolverRegistry) void
+    }
+
+    class AuthController {
+        +loginPage(error, logout, model) String
+    }
+    
+    class OrderController {
+        -OrderService orderService
+        -CustomerRepository customerRepository
+        -ProductRepository productRepository
+        +listOrders(Model) String
+        +showCreateForm(Model, error) String
+        +createOrder(CreateOrderRequest) String
+        +viewOrder(id, Model) String
+        +deleteOrder(id) String
+        +updateOrderStatus(id, status) String
+    }
+    
+    class OrderRestController {
+        -OrderService orderService
+        +getAllOrders() List~Order~
+        +getOrderById(id) Order
+        +createOrder(CreateOrderRequest) Order
+        +deleteOrder(id) String
+        +updateOrder(id, status) Order
+    }
+    
+    class ProductRestController {
+        -ProductRepository productRepository
+        +getAllProducts() List~ProductInfoDTO~
+    }
 
     class OrderService {
         -OrderRepository orderRepository
@@ -453,6 +497,16 @@ class AppConfig {
         +deleteOrder(id) void
         +updateOrderStatus(id, status) Order
     }
+    
+    class DataLoaderService {
+        -CategoryRepository categoryRepository
+        -CustomerRepository customerRepository
+        -ProductRepository productRepository
+        +loadAllData() void
+        +loadCategories() void
+        +loadCustomers() void
+        +loadProducts() void
+    }
 
     class CategoryRepository {
         <<interface>>
@@ -460,7 +514,7 @@ class AppConfig {
         +findById(id) Optional~Category~
         +findAll() List~Category~
     }
-
+    
     class CustomerRepository {
         <<interface>>
         +save(Customer) Customer
@@ -468,7 +522,7 @@ class AppConfig {
         +findByEmail(email) Optional~Customer~
         +findAll() List~Customer~
     }
-
+    
     class OrderRepository {
         <<interface>>
         +save(Order) Order
@@ -477,7 +531,7 @@ class AppConfig {
         +findByCustomerId(customerId) List~Order~
         +delete(Order) void
     }
-
+    
     class OrderDetailRepository {
         <<interface>>
         +save(OrderDetail) OrderDetail
@@ -485,7 +539,7 @@ class AppConfig {
         +findAll() List~OrderDetail~
         +findByOrderId(orderId) List~OrderDetail~
     }
-
+    
     class ProductRepository {
         <<interface>>
         +save(Product) Product
@@ -500,7 +554,7 @@ class AppConfig {
         -String description
         -List~Product~ products
     }
-
+    
     class Customer {
         -Long id
         -String name
@@ -509,7 +563,7 @@ class AppConfig {
         -String address
         -List~Order~ orders
     }
-
+    
     class Order {
         -Long id
         -Customer customer
@@ -519,7 +573,7 @@ class AppConfig {
         -String shippingAddress
         -List~OrderDetail~ orderDetails
     }
-
+    
     class OrderDetail {
         -Long id
         -Order order
@@ -528,7 +582,7 @@ class AppConfig {
         -BigDecimal price
         +getSubtotal() BigDecimal
     }
-
+    
     class Product {
         -Long id
         -String name
@@ -553,7 +607,7 @@ class AppConfig {
         +getOrderById_Success() void
         +deleteOrder_Success() void
     }
-
+    
     class OrderServiceIntegrationTest {
         -OrderService orderService
         -CustomerRepository customerRepository
@@ -566,24 +620,53 @@ class AppConfig {
         +createOrder_InsufficientStock() void
     }
 
+    class CreateOrderRequest {
+        -Long customerId
+        -String shippingAddress
+        -List~OrderItemRequest~ items
+    }
+    
+    class ProductInfoDTO {
+        -String productName
+        -String categoryName
+        -Integer stockQuantity
+    }
+
+    AppConfig <|-- TestAppConfig : extends
+    
+    OrderController --> OrderService
+    OrderController --> CustomerRepository
+    OrderController --> ProductRepository
+    
+    OrderRestController --> OrderService
+    ProductRestController --> ProductRepository
+    
     OrderService --> OrderRepository
     OrderService --> OrderDetailRepository
     OrderService --> CustomerRepository
     OrderService --> ProductRepository
-
+    
+    DataLoaderService --> CategoryRepository
+    DataLoaderService --> CustomerRepository
+    DataLoaderService --> ProductRepository
+    
     OrderServiceTest ..> OrderService : tests
     OrderServiceTest ..> OrderRepository : mocks
     OrderServiceTest ..> CustomerRepository : mocks
     OrderServiceTest ..> ProductRepository : mocks
-
+    
     OrderServiceIntegrationTest ..> OrderService : tests
     OrderServiceIntegrationTest --> TestAppConfig : uses
-
+    
     Order "1" --> "*" OrderDetail : contains
     Order "*" --> "1" Customer : belongs to
     OrderDetail "*" --> "1" Product : references
     Product "*" --> "1" Category : belongs to
     Customer "1" --> "*" Order : has
+    
+    OrderController ..> CreateOrderRequest : uses
+    OrderRestController ..> CreateOrderRequest : uses
+    ProductRestController ..> ProductInfoDTO : returns
 ```
 
 ## Отчет о тестах
