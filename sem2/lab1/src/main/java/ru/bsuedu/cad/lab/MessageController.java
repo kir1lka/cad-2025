@@ -18,7 +18,7 @@ public class MessageController {
 
     @GetMapping("/")
     public String helloWorld() {
-        return "Привет, мир!";
+        return "привет мир";
     }
 
     @GetMapping("/messages")
@@ -29,7 +29,7 @@ public class MessageController {
     @PostMapping("/messages")
     public synchronized String publishMessage(@RequestBody String message) {
         userMessages.add(message);
-        return "Сообщение успешно опубликовано!";
+        return "сообщение добавлено";
     }
 
     @PutMapping("/messages/{index}")
@@ -37,24 +37,24 @@ public class MessageController {
                                              @RequestBody String message) {
         if (index >= 0 && index < userMessages.size()) {
             userMessages.set(index, message);
-            return "Сообщение успешно изменено!";
+            return "сообщение изменено";
         }
-        return "Сообщение с индексом " + index + " не найдено";
+        return "сообщение с индексом " + index + " не найдено";
     }
 
     @DeleteMapping("/messages/{index}")
     public synchronized String deleteMessage(@PathVariable int index) {
         if (index >= 0 && index < userMessages.size()) {
             userMessages.remove(index);
-            return "Сообщение успешно удалено!";
+            return "сообщение удалено";
         }
-        return "Сообщение с индексом " + index + " не найдено";
+        return "сообщение с индексом " + index + " не найдено";
     }
 
     @DeleteMapping("/messages")
     public synchronized String clearAllMessages() {
         userMessages.clear();
-        return "Все сообщения успешно удалены!";
+        return "все сообщения удалены";
     }
 
     @GetMapping("/messages/count")
