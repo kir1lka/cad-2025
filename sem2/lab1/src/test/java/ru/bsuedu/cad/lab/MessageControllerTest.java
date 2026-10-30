@@ -27,7 +27,7 @@ class MessageControllerTest {
     void returnsGreeting() throws Exception {
         mvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Hello, World!"));
+                .andExpect(content().string("Привет, мир!"));
     }
 
     @Test
@@ -41,15 +41,15 @@ class MessageControllerTest {
     void createsUpdatesAndDeletesMessage() throws Exception {
         mvc.perform(post("/messages").contentType(MediaType.TEXT_PLAIN).content("First note"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Message published successfully!"));
+                .andExpect(content().string("Сообщение успешно опубликовано!"));
         mvc.perform(get("/messages")).andExpect(content().json("[\"First note\"]"));
         mvc.perform(put("/messages/0").contentType(MediaType.TEXT_PLAIN).content("Updated note"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Message updated successfully!"));
+                .andExpect(content().string("Сообщение успешно изменено!"));
         mvc.perform(get("/messages")).andExpect(content().json("[\"Updated note\"]"));
         mvc.perform(delete("/messages/0"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Message deleted successfully!"));
+                .andExpect(content().string("Сообщение успешно удалено!"));
         mvc.perform(get("/messages")).andExpect(content().json("[]"));
     }
 
@@ -61,7 +61,7 @@ class MessageControllerTest {
         mvc.perform(get("/messages/count")).andExpect(content().string("2"));
         mvc.perform(delete("/messages"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("All messages deleted successfully!"));
+                .andExpect(content().string("Все сообщения успешно удалены!"));
         mvc.perform(get("/messages")).andExpect(content().json("[]"));
         mvc.perform(get("/messages/count")).andExpect(content().string("0"));
         mvc.perform(delete("/messages")).andExpect(status().isOk());
@@ -73,7 +73,7 @@ class MessageControllerTest {
         mvc.perform(put("/messages/{index}", index)
                         .contentType(MediaType.TEXT_PLAIN).content("Updated note"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Message not found at index " + index));
+                .andExpect(content().string("Сообщение с индексом " + index + " не найдено"));
         mvc.perform(get("/messages")).andExpect(content().json("[]"));
     }
 
@@ -82,7 +82,7 @@ class MessageControllerTest {
     void rejectsDeleteOfMissingMessage(int index) throws Exception {
         mvc.perform(delete("/messages/{index}", index))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Message not found at index " + index));
+                .andExpect(content().string("Сообщение с индексом " + index + " не найдено"));
         mvc.perform(get("/messages")).andExpect(content().json("[]"));
     }
 }

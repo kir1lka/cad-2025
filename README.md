@@ -34,7 +34,7 @@
 
 
 ## Лабораторные работы (семестр 2)
-1. 🟢 [Создание проекта Spring Boot](./sem2/lab1/)
+1. 🟢 [Создание проекта Spring Boot](./sem2/lab1/) · [Отчёт в Google Colab](https://colab.research.google.com/github/kir1lka/cad-2025/blob/main/sem2/lab1/rep.ipynb)
 2. 🟢 [Создание проекта Spring MVC](./sem2/lab2/)
 3. 🟢 [Создание проекта Spring  Security](./sem2/lab3/)
 4. 🟢 [Создание проекта Spring  SQL](./sem2/lab4/)
