@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>список задач</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <script th:src="@{/delete-confirm.js}" defer></script>
+</head>
+<body>
+<main class="page">
+    <header class="page-header">
+        <div class="app-icon" aria-hidden="true">✓</div>
+        <div>
+            <h1>список задач</h1>
+            <p>добавляйте задачи и отмечайте выполненные</p>
+        </div>
+    </header>
+
+    <div class="notice success" role="status" th:if="${message}" th:text="${message}"></div>
+    <div class="notice error" role="alert" th:if="${error}" th:text="${error}"></div>
+
+    <div class="layout">
+        <section class="panel tasks-panel" aria-labelledby="tasks-heading">
+            <div class="section-header">
+                <h2 id="tasks-heading">мои задачи</h2>
+                <span class="count" th:text="${tasks.size()}">0</span>
+            </div>
+
+            <form class="search" th:action="@{/}" method="get">
+                <label class="visually-hidden" for="query">поиск по задачам</label>
+                <input id="query" name="q" type="search" th:value="${query}"
+                       placeholder="найти по названию или описанию">
+                <button type="submit" class="button secondary">найти</button>
+                <a class="reset" th:if="${!query.isEmpty()}" th:href="@{/}">сбросить</a>
+            </form>
+
+            <div class="empty" th:if="${tasks.isEmpty()}">
+                <div class="empty-icon" aria-hidden="true">☰</div>
+                <h3 th:text="${query.isEmpty() ? 'задач пока нет' : 'ничего не найдено'}"></h3>
+                <p th:text="${query.isEmpty() ? 'добавьте первую задачу с помощью формы' : 'попробуйте изменить запрос'}"></p>
+            </div>
+
+            <ul class="task-list" th:if="${!tasks.isEmpty()}">
+                <li class="task" th:each="task : ${tasks}" th:classappend="${task.completed ? 'done' : ''}">
+                    <div class="task-top">
+                        <h3 th:text="${task.title}"></h3>
+                        <span class="status" th:classappend="${task.completed ? 'completed' : 'pending'}"
+                              th:text="${task.completed ? 'выполнена' : 'в работе'}"></span>
+                    </div>
+                    <p class="task-description" th:if="${!task.description.isEmpty()}"
+                       th:text="${task.description}"></p>
+                    <div class="task-actions">
+                        <form th:action="@{/updateTask/{id}(id=${task.id})}" method="post">
+                            <input type="hidden" name="completed" th:value="${!task.completed}">
+                            <button type="submit" class="button secondary"
+                                    th:text="${task.completed ? 'вернуть в работу' : 'выполнить'}"></button>
+                        </form>
+                        <form th:action="@{/deleteTask/{id}(id=${task.id})}" method="post"
+                              data-delete-form th:attr="data-task-title=${task.title}">
+                            <button type="submit" class="button danger"
+                                    th:aria-label="${'удалить задачу ' + task.title}">удалить</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <aside class="panel add-panel" aria-labelledby="add-heading">
+            <h2 id="add-heading">новая задача</h2>
+            <p class="form-hint">что нужно сделать</p>
+            <form th:action="@{/addTask}" method="post" class="add-form">
+                <label for="title">название</label>
+                <input id="title" name="title" type="text" maxlength="100" required
+                       placeholder="например, подготовить отчёт">
+                <label for="description">описание</label>
+                <textarea id="description" name="description" rows="4" maxlength="1000"
+                          placeholder="детали задачи"></textarea>
+                <button type="submit" class="button primary">добавить задачу</button>
+            </form>
+            <p class="storage-note">задачи хранятся до остановки приложения</p>
+        </aside>
+    </div>
+</main>
+<dialog id="delete-dialog" aria-labelledby="delete-heading">
+    <form method="dialog">
+        <h2 id="delete-heading">удалить задачу</h2>
+        <p id="delete-title"></p>
+        <p class="dialog-hint">задача будет удалена из списка</p>
+        <div class="dialog-actions">
+            <button class="button secondary" value="cancel" autofocus>оставить</button>
+            <button class="button delete-confirm" value="delete">удалить</button>
+        </div>
+    </form>
+</dialog>
+</body>
+</html>
