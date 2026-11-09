@@ -36,10 +36,12 @@
 ## Лабораторные работы (семестр 2)
 1. 🟢 [Создание проекта Spring Boot](./sem2/lab1/) · [Отчёт в Google Colab](https://colab.research.google.com/github/kir1lka/cad-2025/blob/main/sem2/lab1/rep.ipynb)
 2. 🟢 [Создание проекта Spring MVC](./sem2/lab2/) · [Отчёт в Google Colab](https://colab.research.google.com/github/kir1lka/cad-2025/blob/main/sem2/lab2/rep.ipynb)
-3. 🟢 [Создание проекта Spring  Security](./sem2/lab3/)
-4. 🟢 [Создание проекта Spring  SQL](./sem2/lab4/)
+3. 🟢 [Spring Security](./sem2/lab3/) · [Отчёт в Google Colab](https://colab.research.google.com/github/kir1lka/cad-2025/blob/main/sem2/lab3/rep.ipynb)
+4. 🟢 [Spring и PostgreSQL](./sem2/lab4/) · [Отчёт в Google Colab](https://colab.research.google.com/github/kir1lka/cad-2025/blob/main/sem2/lab4/rep.ipynb)
 5. 🟢 [Создание клиента](./sem2/lab5/)
 6. 🟢 [Создание клиента Android](./sem2/lab6/)
+
+В семестре 2 выполнены работы №1–4. Отчёты содержат пояснения, примеры Java-кода и скриншоты в текстовых ячейках. Для запуска проектов на ПК требуются Java 17 и Node.js; для PostgreSQL в работе №4 используется Docker Desktop.
 
 ## Правила выполнения и сдачи лабораторных
 
